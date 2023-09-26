@@ -26,7 +26,7 @@ public class Usuario {
     private Long idUsuario;
     @ManyToOne
     @JoinColumn(name = "idEspecialidad")
-    private Especialidad idEspecialidad;
+    private Especialidad especialidad;
     @ManyToOne
     @JoinColumn(name = "idPerfil")
     private Perfil idPerfil;

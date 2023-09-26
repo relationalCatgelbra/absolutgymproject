@@ -26,7 +26,7 @@ public class DatosPersonales {
     private Long idDatosPersonales;
     @ManyToOne
     @JoinColumn(name = "idCliente")
-    private Cliente idCliente;
+    private Cliente cliente;
     @Column(length = 255)
     private String antecedentesPersonales;
 
