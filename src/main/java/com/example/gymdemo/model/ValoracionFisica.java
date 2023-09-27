@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 public class ValoracionFisica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCita; // 10
+    private Long idCitaMedica;
     @ManyToOne
     @JoinColumn(name = "idCliente")
     private Cliente idCliente;// 10
@@ -34,6 +34,21 @@ public class ValoracionFisica {
     @JoinColumn(name = "idEstadoCita")
     @Column(length = 3)
     private EstadoCita estadoCita;
+    @ManyToOne
+    @JoinColumn(name = "idUsuario")
+    private Usuario usuario;
+    @ManyToOne
+    @JoinColumn(name = "idDiagnostico")
+    private Diagnostico diagnostico;
+    @ManyToOne
+    @JoinColumn(name = "idEntrenamiento")
+    private Entrenamiento entrenamiento;
+    @ManyToOne
+    @JoinColumn(name = "idRevision")
+    private RevisionOrganosSistema revisionOrganosSistema;
+    @ManyToOne
+    @JoinColumn(name = "idExamenFisico")
+    private ExamenFisicoRegional examenFisicoRegional;
     @ManyToOne
     @JoinColumn(name = "idSignosVitales")
     private SignosVitales idSignosVitales;// 10
