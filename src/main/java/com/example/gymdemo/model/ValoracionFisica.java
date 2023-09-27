@@ -30,7 +30,10 @@ public class ValoracionFisica {
     @ManyToOne
     @JoinColumn(name = "idCliente")
     private Cliente idCliente;// 10
-    // idEstadoCita?? 3
+    @ManyToOne
+    @JoinColumn(name = "idEstadoCita")
+    @Column(length = 3)
+    private EstadoCita estadoCita;
     @ManyToOne
     @JoinColumn(name = "idSignosVitales")
     private SignosVitales idSignosVitales;// 10
