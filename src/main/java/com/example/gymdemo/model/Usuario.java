@@ -45,4 +45,5 @@ public class Usuario {
     @Column(length = 45)
     private String username;
     private String password;
+    private boolean estado;
 }
