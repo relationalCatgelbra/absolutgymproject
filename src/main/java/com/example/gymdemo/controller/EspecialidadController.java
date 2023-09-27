@@ -25,7 +25,7 @@ public class EspecialidadController {
     public ResponseEntity<?> crearE(@RequestBody(required = true) Especialidad especialidad) {
         String name = especialidad.getName();
         if (name == null || "".equals(name)) {
-            return new ResponseEntity<>("El campo descripción no puede estar vacío", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("El campo nombre no puede estar vacío", HttpStatus.BAD_REQUEST);
         }
         ResponseEntity<Long> response = especialidadService.newEspe(name);
         if (response.getStatusCode() == HttpStatus.CONFLICT) {
@@ -34,7 +34,7 @@ public class EspecialidadController {
         } else if (response.getStatusCode() == HttpStatus.CREATED) {
             Long idEsp = response.getBody();
             return ResponseEntity.status(HttpStatus.CREATED)
-                    .body("Se creo correctamente el tipo de entrenamiento: " + especialidad.getName()
+                    .body("Se creo correctamente la especialidad: " + especialidad.getName()
                             + " con el id: "
                             + idEsp);
         } else {
