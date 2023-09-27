@@ -7,5 +7,6 @@ import com.example.gymdemo.model.Entrenamiento;
 
 @Repository
 public interface EntrenamientoRepository extends JpaRepository<Entrenamiento, Long> {
+    boolean existsBydescripcion(String nombre);
 
 }
