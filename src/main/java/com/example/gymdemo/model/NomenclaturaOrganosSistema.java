@@ -1,5 +1,7 @@
 package com.example.gymdemo.model;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,19 +13,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Builder
 
 @Entity
-@Table(name = "NomengraturaAntecedentesFamiliares")
-public class NomengraturaAntecedentesFamiliares {
+@Table(name = "Nomenclaturaorganossistema")
+public class NomenclaturaOrganosSistema implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idNomenglatura;
+    private Long idNomenclatura;
     @Column(length = 45)
     private String descripcion;
-    @Column(length = 4)
+    @Column(length = 5)
     private Character campoNombre;
+
 }
