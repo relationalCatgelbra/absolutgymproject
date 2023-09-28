@@ -29,7 +29,7 @@ public class Usuario {
     private Especialidad especialidad;
     @ManyToOne
     @JoinColumn(name = "idPerfil")
-    private Perfil idPerfil;
+    private Perfil perfil;
     @Column(length = 45)
     private String nombre;
     @Column(length = 45)
