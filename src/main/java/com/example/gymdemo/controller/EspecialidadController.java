@@ -35,7 +35,7 @@ public class EspecialidadController {
             Long idEsp = response.getBody();
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body("Se creo correctamente la especialidad: " + especialidad.getName()
-                            + " con el id: "
+                            + ", con el id: "
                             + idEsp);
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
