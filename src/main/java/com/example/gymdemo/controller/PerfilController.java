@@ -29,7 +29,7 @@ public class PerfilController {
         ResponseEntity<Long> response = perfilService.perfil(nombre);
         if (response.getStatusCode() == HttpStatus.CONFLICT) {
             return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.CONFLICT)
-                    .body("La descripcion:" + nombre + "ya existe");
+                    .body("El perfil:" + nombre + ", ya existe");
         } else if (response.getStatusCode() == HttpStatus.CREATED) {
             Long idPerfil = response.getBody();
             return ResponseEntity.status(HttpStatus.CREATED)
