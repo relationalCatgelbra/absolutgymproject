@@ -17,6 +17,7 @@ import com.example.gymdemo.service.PerfilService;
 @RestController
 @RequestMapping("api/v1/perfilcontroller")
 public class PerfilController {
+
     @Autowired
     private PerfilService perfilService;
 
