@@ -44,8 +44,8 @@ public class EstadoCitaController {
     @GetMapping(value = "/list")
     public ResponseEntity<?> list() {
         ResponseEntity<List<EstadoCita>> response = estadoCitaServices.list();
-        if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        if (response.getStatusCode() == HttpStatus.NO_CONTENT) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         } else if (response.getStatusCode() == HttpStatus.OK) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(response);

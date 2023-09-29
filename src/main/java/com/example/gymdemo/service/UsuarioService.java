@@ -1,5 +1,7 @@
 package com.example.gymdemo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,4 +60,13 @@ public class UsuarioService {
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarionuevo.getIdUsuario());
 
     }
+
+    @Transactional
+    public ResponseEntity<List<Usuario>> listAllUsers() {
+        if (usuarioRepository.findAll() == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.findAll());
+    }
+
 }

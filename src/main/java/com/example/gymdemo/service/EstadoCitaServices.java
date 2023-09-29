@@ -34,7 +34,7 @@ public class EstadoCitaServices {
     @Transactional
     public ResponseEntity<List<EstadoCita>> list() {
         if (estadoCitaRepository.findAll() == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }
         return ResponseEntity.status(HttpStatus.OK).body(estadoCitaRepository.findAll());
     }

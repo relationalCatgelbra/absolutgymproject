@@ -1,14 +1,18 @@
 package com.example.gymdemo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.gymdemo.DTO.UsuarioDTO;
+import com.example.gymdemo.model.Usuario;
 import com.example.gymdemo.service.UsuarioService;
 
 @RestController
@@ -19,19 +23,6 @@ public class UsuarioController {
 
     @PostMapping(value = "/crear")
     public ResponseEntity<?> crearUser(@RequestBody(required = true) UsuarioDTO user) {
-
-        /*
-         * String nombre = user.getNombre();
-         * String apellido = user.getApellido();
-         * String email = user.getEmail();
-         * String telefono = user.getTelefono();
-         * String celular = user.getCelular();
-         * String cargo = user.getCargo();
-         * String username = user.getUsername();
-         * String password = user.getPassword();
-         * String nombreEspecialidad = user.getNombreEspecialidad();
-         * String nombrePerfil = user.getNombrePerfil();
-         */
 
         ResponseEntity<Long> response = usuarioService.crearUser(user);
 
@@ -53,6 +44,19 @@ public class UsuarioController {
          * return new ResponseEntity<>("El campo Nombre es obligatorio",
          * HttpStatus.BAD_REQUEST);
          */
+    }
+
+    @GetMapping(value = "/list")
+    public ResponseEntity<?> list() {
+        ResponseEntity<List<Usuario>> response = usuarioService.listAllUsers();
+        if (response.getStatusCode() == HttpStatus.NO_CONTENT) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Sin datos");
+        } else if (response.getStatusCode() == HttpStatus.OK) {
+
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 }
