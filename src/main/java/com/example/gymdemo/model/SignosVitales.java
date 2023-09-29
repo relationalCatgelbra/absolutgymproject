@@ -31,7 +31,10 @@ public class SignosVitales {
     @Column(length = 3)
     private Integer pulsoMin;
     @Column(length = 3)
-    private Integer pesoKg; // tinyint oracle = SMALLINT on pgsql
+    private Double pesoKg; // tinyint oracle = SMALLINT on pgsql
     @Column(length = 3)
     private Integer frecuenciaRespiratoria;
+    @Column(length = 3)
+    private Double talla;
+
 }

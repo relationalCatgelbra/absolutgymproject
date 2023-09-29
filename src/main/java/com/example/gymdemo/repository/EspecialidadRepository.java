@@ -8,4 +8,7 @@ import com.example.gymdemo.model.Especialidad;
 @Repository
 public interface EspecialidadRepository extends JpaRepository<Especialidad, Long> {
     boolean existsByName(String name);
+
+    Especialidad findByname(String name);
+
 }

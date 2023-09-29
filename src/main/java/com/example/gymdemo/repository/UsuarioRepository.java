@@ -7,5 +7,7 @@ import com.example.gymdemo.model.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+    boolean existsByusername(String username);
 
+    boolean existsByemail(String email);
 }
