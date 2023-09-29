@@ -1,19 +1,18 @@
 package com.example.gymdemo.service;
 
-import java.util.Optional;
+import java.util.List;
 
 import com.example.gymdemo.model.Cliente;
+import org.springframework.http.ResponseEntity;
 
 public interface ClienteService {
-	
-	Cliente createCliente(Cliente cliente);
-	
-	Optional<Cliente> getClienteById(Long clienteId);
-	
-	Iterable<Cliente> getClientes();
-	
-	Cliente updateCliente(Long clienteId, Cliente cliente);
-	
-	void deleteClienteById(Long clienteId);
+
+	ResponseEntity<Cliente> createCliente(Cliente cliente);
+
+	ResponseEntity<Cliente> getClienteById(Long clienteId);
+
+	ResponseEntity<List<Cliente>> getClientes();
+
+	ResponseEntity<Cliente> updateCliente(Long clienteId, Cliente cliente);
 
 }
