@@ -1,13 +1,12 @@
 package com.example.gymdemo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.gymdemo.model.SignosVitales;
 import com.example.gymdemo.repository.SignosVitalesRepository;
-import org.springframework.http.HttpStatus;
-
-import org.springframework.http.ResponseEntity;
 
 @Service
 public class SignosVitalesService {
@@ -18,7 +17,7 @@ public class SignosVitalesService {
 	public ResponseEntity<SignosVitales> createSignosVitales(SignosVitales signosVitales) {
 
 		return ResponseEntity
-				.status(HttpStatus.OK)
+				.status(HttpStatus.CREATED)
 				.body(signosVitalesRepository.save(signosVitales));
 
 	}
