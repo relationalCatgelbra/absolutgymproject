@@ -1,9 +1,25 @@
 package com.example.gymdemo.service;
 
-import com.example.gymdemo.model.SignosVitales;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
-public interface SignosVitalesService {
-	
-	public SignosVitales createSignosVitales(SignosVitales signosVitales);
+import com.example.gymdemo.model.SignosVitales;
+import com.example.gymdemo.repository.SignosVitalesRepository;
+
+@Service
+public class SignosVitalesService {
+
+	@Autowired
+	private SignosVitalesRepository signosVitalesRepository;
+
+	public ResponseEntity<SignosVitales> createSignosVitales(SignosVitales signosVitales) {
+
+		return ResponseEntity
+				.status(HttpStatus.CREATED)
+				.body(signosVitalesRepository.save(signosVitales));
+
+	}
 
 }

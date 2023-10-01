@@ -1,9 +1,9 @@
 package com.example.gymdemo.controller;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,41 +18,33 @@ import com.example.gymdemo.service.ClienteService;
 @RestController
 @RequestMapping("/clientes/")
 public class ClienteController {
-	
+
 	@Autowired
 	private ClienteService clienteService;
-	
+
 	@GetMapping
-	public Iterable<Cliente> getAllClientes(){
+	public ResponseEntity<List<Cliente>> getAllClientes() {
 		return clienteService.getClientes();
 	}
-	
+
 	@GetMapping("{id}")
-	public Optional<Cliente> getClienteById(
-			@PathVariable("id") Long clienteId
-			){
+	public ResponseEntity<Cliente> getClienteById(
+			@PathVariable("id") Long clienteId) {
 		return clienteService.getClienteById(clienteId);
 	}
-	
+
 	@PostMapping
-	public Cliente createCliente(
+	public ResponseEntity<Cliente> createCliente(
 			@RequestBody Cliente cliente) {
 		return clienteService.createCliente(cliente);
 	}
-	
+
 	@PutMapping("{id}")
 	public void updateCliente(
 			@PathVariable("id") Long clienteId,
 			@RequestBody Cliente cliente) {
 		clienteService.updateCliente(clienteId, cliente);
-		
+
 	}
-	
-	@DeleteMapping("{id}")
-	void deleteClienteById(
-			@PathVariable("id") Long clienteId) {
-		clienteService.deleteClienteById(clienteId);
-	}
-	
 
 }
