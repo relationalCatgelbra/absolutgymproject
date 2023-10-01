@@ -17,7 +17,7 @@ public class SignosVitalesService {
 	public ResponseEntity<SignosVitales> createSignosVitales(SignosVitales signosVitales) {
 
 		return ResponseEntity
-				.status(HttpStatus.OK)
+				.status(HttpStatus.CREATED)
 				.body(signosVitalesRepository.save(signosVitales));
 
 	}
