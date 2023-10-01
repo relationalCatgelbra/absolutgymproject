@@ -69,4 +69,7 @@ public class UsuarioService {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioRepository.findAll());
     }
 
+    @Transactional
+    public ResponseEntity<>
+
 }
