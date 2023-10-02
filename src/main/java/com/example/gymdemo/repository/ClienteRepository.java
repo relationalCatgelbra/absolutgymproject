@@ -7,5 +7,6 @@ import com.example.gymdemo.model.Cliente;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+    boolean existsBycedula(Character cedula);
 
 }

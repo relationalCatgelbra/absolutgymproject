@@ -27,6 +27,7 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCliente;
+    @Column(length = 20)
     private String nombre;
     @Column(length = 20)
     private String apellidoPaterno; // varchar(20)
