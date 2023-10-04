@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,4 +61,27 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping(value = "/listid/{id}")
+    public ResponseEntity<?> listbyid(@PathVariable Long id) {
+        ResponseEntity<?> response = usuarioService.listbyid(id);
+        if (response.getStatusCode() == HttpStatus.OK) {
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado por el id: " + id);
+        }
+    }
+
+    @PatchMapping(value = "editUser/{id}")
+    public ResponseEntity<?> editUser(@PathVariable(required = true) Long id, Usuario usuario) {
+        ResponseEntity<Usuario> response = usuarioService.EditUser(id, usuario);
+        if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("No se encontro el usuario");
+        } else if (response.getStatusCode() == HttpStatus.OK) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
