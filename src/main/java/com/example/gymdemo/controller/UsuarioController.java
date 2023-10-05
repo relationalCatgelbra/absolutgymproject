@@ -1,6 +1,7 @@
 package com.example.gymdemo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -84,8 +85,9 @@ public class UsuarioController {
     }
 
     @PatchMapping(value = "editUser/{id}")
-    public ResponseEntity<?> editUser(@PathVariable(required = true) Long id, Usuario usuario) {
-        ResponseEntity<Usuario> response = usuarioService.EditUser(id, usuario);
+    public ResponseEntity<?> editUser(@PathVariable(required = true) Long id,
+            @RequestBody Map<String, Object> updates) {
+        ResponseEntity<Usuario> response = usuarioService.EditUser(id, updates);
         if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("No se encontro el usuario");

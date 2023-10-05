@@ -46,4 +46,16 @@ public class Usuario {
     private String username;
     private String password;
     private boolean estado;
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public void setEspecialidad(Especialidad especialidad) {
+        this.especialidad = especialidad;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+    }
 }

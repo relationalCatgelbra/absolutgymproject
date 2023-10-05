@@ -1,6 +1,7 @@
 package com.example.gymdemo.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,25 +92,71 @@ public class UsuarioService {
         return ResponseEntity.status(HttpStatus.OK).body(listAct);
     }
 
+    public Usuario findById(Long id) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(id);
+        return usuarioOptional.orElse(null);
+    }
+
     @Transactional
-    public ResponseEntity<Usuario> EditUser(Long id, Usuario usuario) {
-        Usuario usuarioe = usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    public ResponseEntity<Usuario> EditUser(Long id, Map<String, Object> updates) {
 
-        usuarioe.setEspecialidad(usuario.getEspecialidad());
-        usuarioe.setPerfil(usuario.getPerfil());
-        usuarioe.setNombre(usuario.getNombre());
-        usuarioe.setApellido(usuario.getApellido());
-        usuarioe.setEmail(usuario.getEmail());
-        usuarioe.setTelefono(usuario.getTelefono());
-        usuarioe.setCelular(usuario.getCelular());
-        usuarioe.setCargo(usuario.getCargo());
-        usuarioe.setUsername(usuario.getUsername());
-        usuarioe.setPassword(usuario.getPassword());
-        usuarioe.setEstado(usuario.isEstado());
+        Usuario usuarioExiste = findById(id);/*
+                                              * .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                              * "no se encontro usuario"))
+                                              */
+        if (usuarioExiste == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        if (updates.containsKey("nombre")) {
+            usuarioExiste.setNombre((String) updates.get("nombre"));
+        }
+        if (updates.containsKey("especialidad")) {
+            String nombreEspecialidad = (String) updates.get("especialidad");
+            Especialidad especialidad = especialidadRepository.findByname(nombreEspecialidad);
+            if (especialidad != null) {
+                usuarioExiste.setEspecialidad(especialidad);
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró la especialidad");
+            }
 
-        Usuario save = usuarioRepository.save(usuarioe);
-        return ResponseEntity.status(HttpStatus.OK).body(save);
+        }
+        if (updates.containsKey("perfil")) {
+            String nombrePerfil = (String) updates.get("perfil");
+            Perfil perfil = perfilRepository.findByname(nombrePerfil);
+            if (perfil != null) {
+                usuarioExiste.setPerfil(perfil);
+            } else {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró el perfil");
+            }
+        }
+        if (updates.containsKey("apellido")) {
+            usuarioExiste.setApellido((String) updates.get("apellido"));
+        }
+        if (updates.containsKey("email")) {
+            usuarioExiste.setEmail((String) updates.get("email"));
+        }
+        if (updates.containsKey("telefono")) {
+            usuarioExiste.setTelefono((String) updates.get("telefono"));
+        }
+        if (updates.containsKey("celular")) {
+            usuarioExiste.setCelular((String) updates.get("celular"));
+        }
+        if (updates.containsKey("cargo")) {
+            usuarioExiste.setCargo((String) updates.get("cargo"));
+        }
+        if (updates.containsKey("username")) {
+            usuarioExiste.setUsername((String) updates.get("username"));
+        }
+        if (updates.containsKey("password")) {
+            usuarioExiste.setPassword((String) updates.get("password"));
+        }
+        if (updates.containsKey("estado")) {
+            boolean nuevoEstado = (boolean) updates.get("estado");
+            usuarioExiste.setEstado(nuevoEstado);
+        }
+
+        Usuario user = usuarioRepository.save(usuarioExiste);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
 }
