@@ -66,9 +66,21 @@ public class UsuarioController {
         ResponseEntity<?> response = usuarioService.listbyid(id);
         if (response.getStatusCode() == HttpStatus.OK) {
             return ResponseEntity.status(HttpStatus.OK).body(response);
-        } else {
+        } else if (response.getStatusCode() == HttpStatus.NOT_FOUND) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado por el id: " + id);
         }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    @GetMapping(value = "/listActive")
+    public ResponseEntity<?> listActive() {
+        ResponseEntity<?> response = usuarioService.listActive();
+        if (response.getStatusCode() == HttpStatus.NO_CONTENT) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        } else if (response.getStatusCode() == HttpStatus.OK) {
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
     @PatchMapping(value = "editUser/{id}")

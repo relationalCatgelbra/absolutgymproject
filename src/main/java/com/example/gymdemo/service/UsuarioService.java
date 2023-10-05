@@ -1,7 +1,7 @@
 package com.example.gymdemo.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -73,24 +73,23 @@ public class UsuarioService {
 
     @Transactional
     public ResponseEntity<?> listbyid(Long id) {
-        List<Usuario> user = usuarioRepository.findAll();
-        List<Usuario> findbyid = user.stream()
-                .filter(u -> u.getIdUsuario().equals(id))
-                .collect(Collectors.toList());
-        return ResponseEntity.status(HttpStatus.OK).body(findbyid);
+        Optional<Usuario> userOptional = usuarioRepository.findById(id);
+
+        if (userOptional.isPresent()) {
+            Usuario user = userOptional.get();
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado con el ID: " + id);
     }
 
-    /*
-     * Optional<Usuario> userOptional = usuarioRepository.findById(id);
-     * 
-     * if (userOptional.isPresent()) {
-     * Usuario user = userOptional.get();
-     * return ResponseEntity.status(HttpStatus.OK).body(user);
-     * }
-     * return ResponseEntity.status(HttpStatus.NOT_FOUND).
-     * body("Usuario no encontrado con el ID: " + id);
-     * }
-     */
+    @Transactional
+    public ResponseEntity<?> listActive() {
+        List<Usuario> listAct = usuarioRepository.findByEstado(true);
+        if (listAct.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(listAct);
+    }
 
     @Transactional
     public ResponseEntity<Usuario> EditUser(Long id, Usuario usuario) {
