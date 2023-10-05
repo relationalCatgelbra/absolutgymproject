@@ -42,11 +42,7 @@ public class UsuarioController {
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        /*
-         * if (nombre == null || "".equals(nombre))
-         * return new ResponseEntity<>("El campo Nombre es obligatorio",
-         * HttpStatus.BAD_REQUEST);
-         */
+
     }
 
     @GetMapping(value = "/list")

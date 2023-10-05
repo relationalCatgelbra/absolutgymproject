@@ -157,6 +157,7 @@ public class UsuarioService {
 
         Usuario user = usuarioRepository.save(usuarioExiste);
         return ResponseEntity.status(HttpStatus.OK).body(user);
+
     }
 
 }
