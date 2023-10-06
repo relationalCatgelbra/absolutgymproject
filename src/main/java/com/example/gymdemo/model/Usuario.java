@@ -1,12 +1,16 @@
 package com.example.gymdemo.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,6 +51,9 @@ public class Usuario {
     private String password;
     private boolean estado;
 
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+    private List<Perfil> usuarioRoles;
+
     public void setEstado(boolean estado) {
         this.estado = estado;
     }
@@ -55,7 +62,9 @@ public class Usuario {
         this.especialidad = especialidad;
     }
 
-    public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
-    }
+    /*
+     * public void setPerfil(Perfil perfil) {
+     * this.perfil = perfil;
+     * }
+     */
 }
