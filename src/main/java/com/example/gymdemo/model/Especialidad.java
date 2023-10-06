@@ -24,4 +24,9 @@ public class Especialidad {
     private Long idEspecialidad;
     @Column(length = 45)
     private String name;
+
+    /*
+     * @OneToMany(mappedBy = "especialidad")
+     * private List<Usuario> usuarios;
+     */
 }

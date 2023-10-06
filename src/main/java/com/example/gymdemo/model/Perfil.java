@@ -20,8 +20,13 @@ import lombok.NoArgsConstructor;
 @Table(name = "Perfil")
 public class Perfil {
     @Id
-     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPerfil;
     @Column(length = 45)
     private String name;
+
+    /*
+     * @OneToMany(mappedBy = "perfil")
+     * private List<Usuario> usuarios;
+     */
 }

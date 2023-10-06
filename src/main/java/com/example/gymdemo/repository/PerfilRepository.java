@@ -8,4 +8,6 @@ import com.example.gymdemo.model.Perfil;
 @Repository
 public interface PerfilRepository extends JpaRepository<Perfil, Long> {
     boolean existsByName(String name);
+
+    Perfil findByname(String name);
 }

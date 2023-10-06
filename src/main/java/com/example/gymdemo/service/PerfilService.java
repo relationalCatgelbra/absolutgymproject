@@ -33,7 +33,7 @@ public class PerfilService {
     @Transactional
     public ResponseEntity<List<Perfil>> list() {
         if (perfilRepository.findAll() == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }
         return ResponseEntity.status(HttpStatus.OK).body(perfilRepository.findAll());
     }
