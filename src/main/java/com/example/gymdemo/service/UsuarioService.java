@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -14,8 +15,10 @@ import com.example.gymdemo.DTO.UsuarioDTO;
 import com.example.gymdemo.model.Especialidad;
 import com.example.gymdemo.model.Perfil;
 import com.example.gymdemo.model.Usuario;
+import com.example.gymdemo.model.UsuarioPerfil;
 import com.example.gymdemo.repository.EspecialidadRepository;
 import com.example.gymdemo.repository.PerfilRepository;
+import com.example.gymdemo.repository.UsuarioPerfilRepository;
 import com.example.gymdemo.repository.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
@@ -31,6 +34,12 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private UsuarioPerfilRepository usuarioPerfilRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Transactional
     public ResponseEntity<Long> crearUser(UsuarioDTO uDto) {
         if (usuarioRepository.existsByusername(uDto.getUsername())
@@ -39,9 +48,8 @@ public class UsuarioService {
         }
 
         Especialidad especialidad = especialidadRepository.findByname(uDto.getNombreEspecialidad());
-        Perfil perfil = perfilRepository.findByname(uDto.getNombrePerfil());
 
-        if (especialidad == null || perfil == null) {
+        if (especialidad == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
 
@@ -53,13 +61,23 @@ public class UsuarioService {
                 .celular(uDto.getCelular())
                 .cargo(uDto.getCargo())
                 .username(uDto.getUsername())
-                .password(uDto.getPassword())
+                .password(passwordEncoder.encode(uDto.getPassword()))
                 .estado(true)
                 .especialidad(especialidad)
-                .perfil(perfil)
                 .build();
 
         Usuario usuarionuevo = usuarioRepository.save(u);
+
+        Optional<Perfil> perfil = perfilRepository.findByName(uDto.getNombrePerfil());
+        if (perfil.isPresent()) {
+            Perfil perfil2 = perfil.get();
+            UsuarioPerfil usuarioPerfil = UsuarioPerfil.builder()
+                    .usuario(usuarionuevo)
+                    .perfil(perfil2)
+                    .build();
+            usuarioPerfilRepository.save(usuarioPerfil);
+        }
+
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarionuevo.getIdUsuario());
 
     }
@@ -124,7 +142,7 @@ public class UsuarioService {
             String nombrePerfil = (String) updates.get("perfil");
             Perfil perfil = perfilRepository.findByname(nombrePerfil);
             if (perfil != null) {
-                usuarioExiste.setPerfil(perfil);
+                // usuarioExiste.setPerfil(perfil);
             } else {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró el perfil");
             }

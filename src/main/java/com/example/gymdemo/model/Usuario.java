@@ -31,9 +31,6 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name = "idEspecialidad")
     private Especialidad especialidad;
-    @ManyToOne
-    @JoinColumn(name = "idPerfil")
-    private Perfil perfil;
     @Column(length = 45)
     private String nombre;
     @Column(length = 45)
@@ -52,7 +49,7 @@ public class Usuario {
     private boolean estado;
 
     @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
-    private List<Perfil> usuarioRoles;
+    private List<UsuarioPerfil> usuarioPerfiles;
 
     public void setEstado(boolean estado) {
         this.estado = estado;
@@ -61,10 +58,4 @@ public class Usuario {
     public void setEspecialidad(Especialidad especialidad) {
         this.especialidad = especialidad;
     }
-
-    /*
-     * public void setPerfil(Perfil perfil) {
-     * this.perfil = perfil;
-     * }
-     */
 }

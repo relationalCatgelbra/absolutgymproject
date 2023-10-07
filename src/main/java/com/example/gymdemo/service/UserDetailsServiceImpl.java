@@ -1,8 +1,6 @@
 package com.example.gymdemo.service;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.hibernate.Hibernate;
@@ -15,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.gymdemo.model.Perfil;
 import com.example.gymdemo.model.Usuario;
 import com.example.gymdemo.repository.UsuarioRepository;
 
@@ -31,12 +28,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                                 .orElseThrow(() -> new UsernameNotFoundException(
                                                 "El usuario: " + username + " no existe"));
 
-                Hibernate.initialize(userEntity.getPerfil());
+                Hibernate.initialize(userEntity.getUsuarioPerfiles());
 
-                List<Perfil> perfiles = Arrays.asList(userEntity.getPerfil());
-
-                Collection<? extends GrantedAuthority> authorities = perfiles.stream()
-                                .map(rol -> new SimpleGrantedAuthority("ROLE_" + rol.getName()))
+                Collection<? extends GrantedAuthority> authorities = userEntity.getUsuarioPerfiles()
+                                .stream()
+                                .map(usuarioPerfiles -> usuarioPerfiles.getPerfil())
+                                .map(perfil -> new SimpleGrantedAuthority("ROLE_" + perfil.getName()))
                                 .collect(Collectors.toList());
                 return new User(userEntity.getUsername(), userEntity.getPassword(),
                                 true,
